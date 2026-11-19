@@ -1,0 +1,1228 @@
+/* ==========================================================================
+   MAYOR MYCA VERGARA - INTERACTIVE BIRTHDAY CARD
+   Designed with Cozy Watercolor & Ink-Outline Lo-Fi Aesthetic
+   Mobile-First (375px - 430px, 100dvh)
+   ========================================================================== */
+
+:root {
+  --font-body: 'Quicksand', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-hand: 'Caveat', cursive, sans-serif;
+  --font-sans: 'Outfit', sans-serif;
+
+  /* Color Palette */
+  --bg-dark: #0f1523;
+  --bg-twilight: #161e33;
+  --cream-card: rgba(255, 251, 245, 0.94);
+  --cream-card-solid: #fffcf7;
+  --polaroid-bg: #fdfbf7;
+  
+  --ink-primary: #2c1810;
+  --ink-secondary: #5e483e;
+  --ink-muted: #8c766b;
+  
+  --gold-warm: #f59e0b;
+  --gold-glow: #fbbf24;
+  --gold-light: #fef3c7;
+  --cabanatuan-gold: #d97706;
+  --cabanatuan-blue: #1e3a8a;
+  
+  --pastel-pink: #f4a5ae;
+  --pastel-blue: #7dd3fc;
+  --pastel-yellow: #fde047;
+  --pastel-mint: #86efac;
+  --pastel-lavender: #d8b4fe;
+
+  --shadow-warm: 0 16px 36px rgba(44, 24, 16, 0.22), 0 4px 10px rgba(0, 0, 0, 0.08);
+  --shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --radius-card: 20px;
+  --radius-btn: 50px;
+}
+
+/* Base Reset & Box Sizing */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--bg-dark);
+  font-family: var(--font-body);
+  color: var(--ink-primary);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Outer Desktop Viewport Wrapper */
+.app-viewport {
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 50% 40%, #1e2842 0%, #0c101a 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Mobile Stage Frame */
+.card-stage {
+  width: 100%;
+  max-width: 430px;
+  height: 100%;
+  max-height: 932px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background-color: #1a2238;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.7);
+  transition: filter 0.6s ease;
+}
+
+@media (min-width: 500px) {
+  .card-stage {
+    height: 92vh;
+    border-radius: 36px;
+    border: 3px solid rgba(255, 255, 255, 0.08);
+  }
+}
+
+/* Background Layer (assets/bg_party.png) */
+.bg-layer {
+  position: absolute;
+  inset: 0;
+  background-image: url('assets/bg_party.png');
+  background-size: cover;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  z-index: 1;
+  pointer-events: none;
+  transform: translateZ(0);
+}
+
+/* Step 1 Room Dimmer (Dark Room Opener) */
+.room-dimmer {
+  position: absolute;
+  inset: 0;
+  background: rgba(6, 10, 22, 0.93);
+  backdrop-filter: brightness(0.12) saturate(0.5);
+  -webkit-backdrop-filter: brightness(0.12) saturate(0.5);
+  z-index: 2;
+  opacity: 1;
+  transition: opacity 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), backdrop-filter 0.5s ease;
+  pointer-events: none;
+}
+
+.room-dimmer.lights-on {
+  opacity: 0;
+  backdrop-filter: brightness(1) saturate(1);
+  -webkit-backdrop-filter: brightness(1) saturate(1);
+}
+
+/* Fairy Lights Sparkle / Glow Overlay */
+.fairy-lights-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 160px;
+  background: radial-gradient(ellipse at 50% 10%, rgba(254, 240, 138, 0.35) 0%, rgba(251, 191, 36, 0.15) 50%, transparent 80%);
+  z-index: 3;
+  opacity: 0;
+  transition: opacity 1s ease;
+  pointer-events: none;
+}
+
+.fairy-lights-glow.active {
+  opacity: 1;
+  animation: fairyPulse 3.5s ease-in-out infinite alternate;
+}
+
+@keyframes fairyPulse {
+  0% { opacity: 0.75; transform: scale(1); }
+  100% { opacity: 1; transform: scale(1.02); }
+}
+
+/* Subtle Slow-Drifting Warm Twilight Bokeh / Dust Specks */
+.ambient-bokeh-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  overflow: hidden;
+}
+
+.bokeh-speck {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(254, 240, 138, 0.65) 0%, rgba(251, 191, 36, 0.25) 50%, transparent 80%);
+  filter: blur(1.5px);
+  opacity: 0;
+  animation: bokehFloat 12s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.speck-1 { width: 14px; height: 14px; left: 58%; top: 32%; animation-duration: 11s; animation-delay: 0s; }
+.speck-2 { width: 18px; height: 18px; left: 74%; top: 40%; animation-duration: 14s; animation-delay: 2.5s; }
+.speck-3 { width: 10px; height: 10px; left: 66%; top: 25%; animation-duration: 9s; animation-delay: 5s; }
+.speck-4 { width: 22px; height: 22px; left: 82%; top: 35%; animation-duration: 16s; animation-delay: 7s; }
+.speck-5 { width: 12px; height: 12px; left: 52%; top: 44%; animation-duration: 13s; animation-delay: 4s; }
+
+@keyframes bokehFloat {
+  0% { opacity: 0; transform: translate(0, 20px) scale(0.8); }
+  25% { opacity: 0.65; }
+  50% { opacity: 0.85; transform: translate(-8px, -25px) scale(1.1); }
+  75% { opacity: 0.5; }
+  100% { opacity: 0; transform: translate(10px, -65px) scale(0.9); }
+}
+
+/* Confetti Canvas */
+.confetti-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 30;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   HEADER / TOP BAR
+   ========================================================================== */
+.top-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 40;
+  padding: calc(env(safe-area-inset-top, 0px) + 14px) 18px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.city-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  color: #fff;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.city-pin {
+  font-size: 0.85rem;
+}
+
+/* Floating Music Toggle Button */
+.music-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  min-height: 38px;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 24px;
+  color: var(--ink-primary);
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  transition: all 0.25s ease;
+}
+
+.music-svg-icon {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  color: #b45309;
+}
+
+.music-btn:hover {
+  background: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.music-btn:active {
+  transform: scale(0.96);
+}
+
+.music-btn.playing {
+  background: rgba(254, 243, 199, 0.95);
+  border-color: var(--gold-glow);
+  color: #92400e;
+  box-shadow: 0 0 15px rgba(251, 191, 36, 0.4);
+}
+
+/* Sound Waves Animation */
+.sound-waves {
+  display: none;
+  align-items: flex-end;
+  gap: 2px;
+  height: 12px;
+  margin-left: 2px;
+}
+
+.music-btn.playing .sound-waves {
+  display: inline-flex;
+}
+
+.sound-waves .wave {
+  width: 2.5px;
+  background-color: #d97706;
+  border-radius: 2px;
+  animation: waveBar 0.8s ease-in-out infinite alternate;
+}
+
+.sound-waves .wave:nth-child(1) { height: 4px; animation-delay: 0s; }
+.sound-waves .wave:nth-child(2) { height: 11px; animation-delay: 0.2s; }
+.sound-waves .wave:nth-child(3) { height: 7px; animation-delay: 0.4s; }
+
+@keyframes waveBar {
+  0% { height: 3px; }
+  100% { height: 12px; }
+}
+
+/* ==========================================================================
+   STEPS CONTAINER & STEP CARDS
+   ========================================================================== */
+.steps-container {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc(env(safe-area-inset-top, 0px) + 54px) 18px calc(env(safe-area-inset-bottom, 0px) + 56px);
+}
+
+.step-card {
+  position: absolute;
+  inset: 0;
+  padding: calc(env(safe-area-inset-top, 0px) + 60px) 18px calc(env(safe-area-inset-bottom, 0px) + 64px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(14px) scale(0.98);
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              visibility 0.35s;
+}
+
+.step-card.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+
+.step-content {
+  width: 100%;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* Common Primary Button */
+.primary-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  max-width: 290px;
+  min-height: 52px;
+  padding: 14px 24px;
+  background: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);
+  color: #ffffff;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  border: none;
+  border-radius: var(--radius-btn);
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(234, 88, 12, 0.4), 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+  user-select: none;
+}
+
+.primary-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(234, 88, 12, 0.5), 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.primary-btn:active {
+  transform: scale(0.97);
+}
+
+.primary-btn .btn-arrow {
+  font-size: 1.2rem;
+  transition: transform 0.2s ease;
+}
+
+.primary-btn:hover .btn-arrow {
+  transform: translateX(4px);
+}
+
+/* ==========================================================================
+   STEP 1: THE "LIGHTS OFF" COZY ROOM OPENER
+   ========================================================================== */
+.step-1-content {
+  gap: 34px;
+  max-width: 320px;
+}
+
+.lantern-wrapper {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  user-select: none;
+}
+
+.lantern-wrapper:hover {
+  transform: scale(1.08);
+}
+
+.lantern-wrapper:active {
+  transform: scale(0.95);
+}
+
+.lantern-glow-ring {
+  position: absolute;
+  inset: -25px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(251, 191, 36, 0.6) 0%, rgba(245, 158, 11, 0.25) 45%, transparent 75%);
+  animation: glowPulse 2.2s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes glowPulse {
+  0% { transform: scale(0.85); opacity: 0.5; filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.4)); }
+  100% { transform: scale(1.22); opacity: 1; filter: drop-shadow(0 0 20px rgba(251, 191, 36, 0.8)); }
+}
+
+.lantern-icon-circle {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #2b3956, #18233a);
+  border: 2px solid rgba(251, 191, 36, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.65), 0 0 30px rgba(251, 191, 36, 0.4);
+}
+
+.lantern-svg {
+  width: 62px;
+  height: 62px;
+}
+
+.step-1-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 6px 0 2px;
+}
+
+.greeting-title {
+  font-family: var(--font-serif);
+  font-size: 1.65rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: #ffffff;
+  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.9);
+  margin: 0;
+}
+
+.btn-turn-lights {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 60%, #ea580c 100%);
+  color: #2c1810;
+  font-weight: 800;
+  box-shadow: 0 10px 30px rgba(251, 191, 36, 0.45);
+}
+
+.btn-turn-lights:hover {
+  box-shadow: 0 14px 36px rgba(251, 191, 36, 0.6);
+}
+
+/* ==========================================================================
+   STEP 2: POLAROID PORTRAIT & WARM GREETING
+   ========================================================================== */
+.step-2-content {
+  gap: 20px;
+}
+
+.polaroid-card {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+  background: var(--polaroid-bg);
+  padding: 14px 14px 18px;
+  border-radius: 12px;
+  box-shadow: var(--shadow-warm), 0 2px 4px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(230, 220, 205, 0.6);
+  transform: rotate(-1.5deg);
+  transition: transform 0.3s ease;
+}
+
+.polaroid-card:hover {
+  transform: rotate(0deg) scale(1.02);
+}
+
+.polaroid-pin {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.4rem;
+  z-index: 10;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.photo-frame {
+  width: 100%;
+  height: 270px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f1ede6;
+  position: relative;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.portrait-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+
+/* Fallback Monogram */
+.photo-fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #fef3c7, #fed7aa);
+  color: #92400e;
+}
+
+.photo-fallback .monogram {
+  font-family: var(--font-serif);
+  font-size: 3.5rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.photo-fallback .monogram-sub {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.polaroid-caption {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.polaroid-title {
+  font-family: var(--font-hand);
+  font-size: 1.85rem;
+  font-weight: 700;
+  color: var(--ink-primary);
+  line-height: 1.2;
+}
+
+.cabanatuan-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  background: #fef3c7;
+  border: 1px solid #fde68a;
+  border-radius: 16px;
+  font-family: var(--font-sans);
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #b45309;
+}
+
+/* ==========================================================================
+   STEP 3: FROSTED CPDO FAMILY MESSAGE CARD
+   ========================================================================== */
+.step-3-content {
+  gap: 18px;
+}
+
+.frosted-letter-card {
+  position: relative;
+  width: 100%;
+  max-width: 340px;
+  background: var(--cream-card);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: var(--radius-card);
+  padding: 26px 22px 22px;
+  border: 1.5px solid rgba(255, 255, 255, 0.9);
+  box-shadow: var(--shadow-warm);
+  text-align: left;
+}
+
+.letter-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  color: var(--ink-primary);
+}
+
+.salutation {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #1e3a8a;
+  margin-bottom: 2px;
+}
+
+.letter-para {
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--ink-secondary);
+}
+
+.letter-cheer {
+  font-family: var(--font-hand);
+  font-size: 1.55rem;
+  font-weight: 700;
+  color: #b45309;
+  margin-top: 4px;
+}
+
+.signature-block {
+  margin-top: 8px;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(94, 72, 62, 0.2);
+  text-align: right;
+}
+
+.signature-line {
+  font-size: 0.82rem;
+  color: var(--ink-muted);
+  font-style: italic;
+}
+
+.signature-family {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #1e3a8a;
+}
+
+/* ==========================================================================
+   STEP 4: INTERACTIVE BIRTHDAY CAKE FINALE
+   ========================================================================== */
+.step-4 {
+  justify-content: flex-end;
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 60px);
+}
+
+.step-4-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Prompt Header */
+.cake-header {
+  margin-top: 10px;
+  z-index: 20;
+}
+
+.prompt-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  border-radius: 30px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  color: var(--ink-primary);
+  font-family: var(--font-sans);
+  font-size: 0.92rem;
+  font-weight: 700;
+  animation: promptBounce 2s ease-in-out infinite;
+}
+
+@keyframes promptBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+/* Wish Reveal Card (Appears after blowing out candles) */
+.wish-reveal-card {
+  position: absolute;
+  top: 18%;
+  left: 20px;
+  right: 20px;
+  z-index: 35;
+  background: var(--cream-card);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: var(--radius-card);
+  padding: 24px 20px 20px;
+  border: 1.5px solid rgba(255, 255, 255, 0.95);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+  text-align: center;
+  animation: popIn 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes popIn {
+  0% { opacity: 0; transform: scale(0.85) translateY(20px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.reveal-stars {
+  font-size: 1.5rem;
+  margin-bottom: 6px;
+}
+
+.reveal-title {
+  font-family: var(--font-hand);
+  font-size: 2.1rem;
+  font-weight: 700;
+  color: #1e3a8a;
+  line-height: 1.15;
+}
+
+.reveal-sub {
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #b45309;
+  margin-top: 4px;
+}
+
+.reveal-wish {
+  font-size: 0.92rem;
+  color: var(--ink-secondary);
+  margin: 12px 0 16px;
+  line-height: 1.45;
+}
+
+.replay-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 22px;
+  min-height: 44px;
+  background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--radius-btn);
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.replay-svg {
+  width: 16px;
+  height: 16px;
+  stroke: #ffffff;
+}
+
+.replay-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(37, 99, 235, 0.45);
+}
+
+.replay-btn:active {
+  transform: scale(0.96);
+}
+
+/* ==========================================================================
+   TABLETOP FOREGROUND, EASTER EGGS & CAKE
+   ========================================================================== */
+.tabletop-foreground-area {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  margin-bottom: 6px;
+}
+
+/* Left Tabletop Easter Egg Hit-Zones */
+.tabletop-easter-eggs {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 44%;
+  height: 180px;
+  pointer-events: auto;
+  z-index: 25;
+}
+
+.easter-egg-zone {
+  position: absolute;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 1. Tricycle Figurine Hit-Zone */
+.zone-tricycle {
+  left: 18px;
+  bottom: 74px;
+  width: 90px;
+  height: 75px;
+  border-radius: 20px;
+}
+
+/* 2. Gift Box Hit-Zone */
+.zone-gift {
+  left: 16px;
+  bottom: 8px;
+  width: 60px;
+  height: 58px;
+  border-radius: 14px;
+}
+
+/* 3. Ceramic Mug Hit-Zone */
+.zone-mug {
+  left: 86px;
+  bottom: 8px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+}
+
+/* Subtle gentle pulse ring hint on hover/touch */
+.egg-pulse-hint {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(254, 240, 138, 0.35);
+  border: 1.5px solid rgba(251, 191, 36, 0.75);
+  box-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+  opacity: 0.6;
+  animation: eggHintPulse 2.4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes eggHintPulse {
+  0%, 100% { transform: scale(0.85); opacity: 0.35; }
+  50% { transform: scale(1.18); opacity: 0.85; }
+}
+
+.easter-egg-zone:hover .egg-pulse-hint,
+.easter-egg-zone:focus-visible .egg-pulse-hint {
+  opacity: 1;
+  transform: scale(1.25);
+  background: rgba(254, 240, 138, 0.6);
+}
+
+.easter-egg-zone:active {
+  transform: scale(0.94);
+}
+
+/* Screen Reader Only Utility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Floating Easter Egg Speech Bubble Toast */
+.easter-egg-toast {
+  position: absolute;
+  left: 12px;
+  bottom: 160px;
+  max-width: 220px;
+  z-index: 35;
+  pointer-events: auto;
+  animation: toastPop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.35));
+}
+
+.easter-egg-toast.dismissing {
+  animation: toastFade 0.25s ease-out forwards;
+}
+
+@keyframes toastPop {
+  0% { opacity: 0; transform: scale(0.85) translateY(12px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes toastFade {
+  0% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(0.9) translateY(8px); }
+}
+
+.toast-bubble {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 252, 245, 0.96);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1.5px solid rgba(251, 191, 36, 0.5);
+  border-radius: 16px;
+  padding: 10px 14px 10px 14px;
+  box-shadow: 0 4px 16px rgba(44, 24, 16, 0.15);
+}
+
+.toast-text {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #3b2316;
+  line-height: 1.4;
+  text-align: left;
+}
+
+.toast-close-btn {
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  line-height: 1;
+  color: #8c766b;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  margin-left: 2px;
+}
+
+.toast-close-btn:hover {
+  color: #2c1810;
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.toast-pointer {
+  position: absolute;
+  bottom: -7px;
+  left: 36px;
+  width: 14px;
+  height: 14px;
+  background: rgba(255, 252, 245, 0.96);
+  border-right: 1.5px solid rgba(251, 191, 36, 0.5);
+  border-bottom: 1.5px solid rgba(251, 191, 36, 0.5);
+  transform: rotate(45deg);
+  transition: left 0.25s ease;
+}
+
+/* Tabletop Cake Area */
+.tabletop-cake-area {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 10px;
+}
+
+.cake-stage-wrapper {
+  position: relative;
+  width: 246px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  user-select: none;
+}
+
+.cake-stage-wrapper:hover {
+  transform: scale(1.03);
+}
+
+.cake-stage-wrapper:active {
+  transform: scale(0.97);
+}
+
+/* Soft Warm Candlelight Halo behind the Cake */
+.cake-candlelight-halo {
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 230px;
+  height: 140px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(251, 191, 36, 0.45) 0%, rgba(245, 158, 11, 0.18) 50%, transparent 75%);
+  filter: blur(16px);
+  pointer-events: none;
+  z-index: 1;
+  animation: cakeHaloBreathe 2.4s ease-in-out infinite alternate;
+  transition: opacity 0.5s ease;
+}
+
+@keyframes cakeHaloBreathe {
+  0% { transform: translateX(-50%) scale(0.92); opacity: 0.65; }
+  100% { transform: translateX(-50%) scale(1.08); opacity: 0.95; }
+}
+
+.cake-candlelight-halo.extinguished {
+  opacity: 0 !important;
+  transition: opacity 0.45s ease;
+}
+
+.watercolor-cake-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: visible;
+  filter: drop-shadow(0 4px 12px rgba(44, 24, 16, 0.22));
+}
+
+/* ==========================================================================
+   LIVING FLICKERING SVG CANDLE FLAMES
+   ========================================================================== */
+.svg-flame {
+  transform-box: fill-box;
+  transform-origin: bottom center;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.svg-flame-1 {
+  animation: svgFlameFlicker1 1.25s infinite ease-in-out;
+  filter: drop-shadow(0 -2px 8px rgba(251, 191, 36, 0.95)) drop-shadow(0 0 16px rgba(245, 158, 11, 0.7));
+}
+
+.svg-flame-2 {
+  animation: svgFlameFlicker2 1.45s infinite ease-in-out 0.15s;
+  filter: drop-shadow(0 -3px 10px rgba(251, 191, 36, 1)) drop-shadow(0 0 20px rgba(245, 158, 11, 0.85));
+}
+
+.svg-flame-3 {
+  animation: svgFlameFlicker3 1.35s infinite ease-in-out 0.3s;
+  filter: drop-shadow(0 -2px 8px rgba(251, 191, 36, 0.95)) drop-shadow(0 0 16px rgba(245, 158, 11, 0.7));
+}
+
+@keyframes svgFlameFlicker1 {
+  0% {
+    transform: scale(1, 1) rotate(-3.5deg);
+    filter: drop-shadow(0 -2px 7px rgba(251, 191, 36, 0.85)) drop-shadow(0 0 14px rgba(245, 158, 11, 0.6));
+  }
+  25% {
+    transform: scale(0.94, 1.07) rotate(2.5deg);
+  }
+  50% {
+    transform: scale(1.06, 0.95) rotate(-4deg);
+    filter: drop-shadow(0 -3px 10px rgba(251, 191, 36, 1)) drop-shadow(0 0 20px rgba(245, 158, 11, 0.85));
+  }
+  75% {
+    transform: scale(0.97, 1.04) rotate(3deg);
+  }
+  100% {
+    transform: scale(1, 1) rotate(-3.5deg);
+    filter: drop-shadow(0 -2px 7px rgba(251, 191, 36, 0.85)) drop-shadow(0 0 14px rgba(245, 158, 11, 0.6));
+  }
+}
+
+@keyframes svgFlameFlicker2 {
+  0% {
+    transform: scale(1, 1) rotate(3.5deg);
+    filter: drop-shadow(0 -3px 9px rgba(251, 191, 36, 0.9)) drop-shadow(0 0 16px rgba(245, 158, 11, 0.7));
+  }
+  30% {
+    transform: scale(1.07, 0.94) rotate(-3deg);
+  }
+  60% {
+    transform: scale(0.93, 1.08) rotate(4deg);
+    filter: drop-shadow(0 -4px 12px rgba(251, 191, 36, 1)) drop-shadow(0 0 22px rgba(245, 158, 11, 0.9));
+  }
+  85% {
+    transform: scale(1.04, 0.97) rotate(-2deg);
+  }
+  100% {
+    transform: scale(1, 1) rotate(3.5deg);
+    filter: drop-shadow(0 -3px 9px rgba(251, 191, 36, 0.9)) drop-shadow(0 0 16px rgba(245, 158, 11, 0.7));
+  }
+}
+
+@keyframes svgFlameFlicker3 {
+  0% {
+    transform: scale(1.02, 0.98) rotate(0deg);
+    filter: drop-shadow(0 -2px 8px rgba(251, 191, 36, 0.9)) drop-shadow(0 0 15px rgba(245, 158, 11, 0.65));
+  }
+  25% {
+    transform: scale(0.95, 1.06) rotate(3.5deg);
+  }
+  55% {
+    transform: scale(1.08, 0.93) rotate(-3.5deg);
+    filter: drop-shadow(0 -3px 11px rgba(251, 191, 36, 1)) drop-shadow(0 0 20px rgba(245, 158, 11, 0.85));
+  }
+  80% {
+    transform: scale(0.96, 1.03) rotate(2deg);
+  }
+  100% {
+    transform: scale(1.02, 0.98) rotate(0deg);
+    filter: drop-shadow(0 -2px 8px rgba(251, 191, 36, 0.9)) drop-shadow(0 0 15px rgba(245, 158, 11, 0.65));
+  }
+}
+
+/* Extinguished State */
+.svg-flame.extinguished {
+  opacity: 0 !important;
+  transform: scale(0.15) !important;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+/* SVG Smoke Wisps on Blowout */
+.svg-smoke {
+  opacity: 0;
+  stroke-dasharray: 40;
+  stroke-dashoffset: 40;
+  pointer-events: none;
+  transform-box: fill-box;
+  transform-origin: bottom center;
+}
+
+.svg-smoke.rising {
+  animation: svgSmokeRise 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes svgSmokeRise {
+  0% {
+    opacity: 0.85;
+    stroke-dashoffset: 40;
+    transform: translateY(0) scale(0.8);
+  }
+  50% {
+    opacity: 0.6;
+    stroke-dashoffset: 10;
+  }
+  100% {
+    opacity: 0;
+    stroke-dashoffset: 0;
+    transform: translateY(-28px) scale(1.8);
+  }
+}
+
+/* ==========================================================================
+   BOTTOM STEP DOTS INDICATOR
+   ========================================================================== */
+.bottom-nav {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 40;
+  padding: 12px 18px calc(env(safe-area-inset-bottom, 0px) + 20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.step-dots {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.35);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.dot.active {
+  width: 22px;
+  border-radius: 6px;
+  background-color: #fbbf24;
+  box-shadow: 0 0 10px rgba(251, 191, 36, 0.6);
+}
+
+/* Utility Classes */
+.hide {
+  display: none !important;
+}
+
+/* Accessible Focus States */
+button:focus-visible, [role="button"]:focus-visible {
+  outline: 3px solid var(--gold-glow);
+  outline-offset: 2px;
+}
+
+/* Reduced Motion Mode */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

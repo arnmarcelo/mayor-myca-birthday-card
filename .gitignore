@@ -1,0 +1,14 @@
+# Dependencies & local agents
+.agents/
+.vercel/
+
+# Operating System files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs & temp
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

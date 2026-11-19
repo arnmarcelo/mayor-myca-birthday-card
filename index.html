@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Happy Birthday Mayor Myca! | From CPDO Family</title>
+  <meta name="description" content="A warm, whimsical interactive birthday card for Mayor Myca Elizabeth R. Vergara of Cabanatuan City, sent with love and gratitude by her CPDO Family.">
+  <meta name="theme-color" content="#1a2238">
+
+  <!-- Open Graph & Social Sharing Meta Tags (Viber, Messenger, WhatsApp) -->
+  <meta property="og:title" content="Happy Birthday, Mayor Myca Elizabeth R. Vergara! 🎂">
+  <meta property="og:description" content="A special birthday greeting from your CPDO Family — Cabanatuan City, Nueva Ecija.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="./assets/bg_party.png">
+  <meta property="og:image:alt" content="Cozy watercolor birthday card for Mayor Myca Vergara from CPDO Cabanatuan City">
+  <meta property="og:site_name" content="Cabanatuan City CPDO">
+
+  <!-- Twitter Cards -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Happy Birthday, Mayor Myca Elizabeth R. Vergara! 🎂">
+  <meta name="twitter:description" content="A special birthday greeting from your CPDO Family — Cabanatuan City, Nueva Ecija.">
+  <meta name="twitter:image" content="./assets/bg_party.png">
+
+  <!-- Google Fonts: Quicksand for clean friendly text, Caveat & Playfair for handcrafted warmth -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Outfit:wght@500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Desktop Vignette & Outer Frame -->
+  <div class="app-viewport">
+    
+    <!-- Mobile Card Canvas -->
+    <main class="card-stage" id="cardStage">
+      
+      <!-- Background Image Container -->
+      <div class="bg-layer" id="bgLayer" aria-hidden="true"></div>
+
+      <!-- Subtle Slow-Drifting Warm Twilight Bokeh Specks -->
+      <div class="ambient-bokeh-layer" id="ambientBokeh" aria-hidden="true">
+        <span class="bokeh-speck speck-1"></span>
+        <span class="bokeh-speck speck-2"></span>
+        <span class="bokeh-speck speck-3"></span>
+        <span class="bokeh-speck speck-4"></span>
+        <span class="bokeh-speck speck-5"></span>
+      </div>
+
+      <!-- Twinkle / Fairy Lights Overlay -->
+      <div class="fairy-lights-glow" id="fairyLights" aria-hidden="true"></div>
+
+      <!-- Step 1 Dimmer (Cozy Twilight Room) -->
+      <div class="room-dimmer" id="roomDimmer" aria-hidden="true"></div>
+
+      <!-- Canvas Confetti Overlay (Non-blocking) -->
+      <canvas id="confettiCanvas" class="confetti-canvas" aria-hidden="true"></canvas>
+
+      <!-- Floating Controls Header -->
+      <header class="top-bar">
+        <div class="city-tag">
+          <span class="city-pin" aria-hidden="true">📍</span>
+          <span class="city-name">Cabanatuan City</span>
+        </div>
+        
+        <!-- Music Toggle Button -->
+        <button id="musicToggleBtn" class="music-btn" aria-label="Toggle background music" title="Toggle background music">
+          <svg viewBox="0 0 24 24" class="music-svg-icon" id="musicSvg" fill="currentColor" aria-hidden="true">
+            <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+          </svg>
+          <span class="music-label" id="musicLabel">Music Off</span>
+          <span class="sound-waves" id="soundWaves" aria-hidden="true">
+            <span class="wave"></span>
+            <span class="wave"></span>
+            <span class="wave"></span>
+          </span>
+        </button>
+      </header>
+
+      <!-- Audio Element: preload="none" and loop as specified -->
+      <audio id="birthdayAudio" src="assets/birthday_music.mp3" preload="none" loop></audio>
+
+      <!-- Interactive 4-Step Container -->
+      <section class="steps-container" aria-live="polite">
+
+        <!-- STEP 1: The "Lights Off" Cozy Room Opener -->
+        <article class="step-card step-1 active" id="step1" aria-labelledby="step1-heading">
+          <div class="step-content step-1-content">
+            <div class="lantern-wrapper" id="lanternWrapper" role="button" tabindex="0" title="Tap to turn on the lights" aria-label="Tap to turn on the lights">
+              <div class="lantern-glow-ring"></div>
+              <div class="lantern-icon-circle" aria-hidden="true">
+                <svg viewBox="0 0 64 64" class="lantern-svg" fill="none" stroke="currentColor">
+                  <!-- Cozy Hand-drawn Lantern / Light bulb -->
+                  <path d="M32 10 C22 10 16 18 16 26 C16 33 22 38 24 43 L40 43 C42 38 48 33 48 26 C48 18 42 10 32 10 Z" fill="#FFEAA7" stroke="#D35400" stroke-width="2.5" stroke-linejoin="round"/>
+                  <path d="M26 43 L38 43 L36 50 L28 50 Z" fill="#D35400" stroke="#D35400" stroke-width="2"/>
+                  <path d="M29 50 L35 50 L33 54 L31 54 Z" fill="#B33926"/>
+                  <circle cx="32" cy="27" r="6" fill="#FFF7D6" filter="drop-shadow(0 0 8px #FFD32A)"/>
+                  <!-- Rays -->
+                  <line x1="32" y1="3" x2="32" y2="7" stroke="#F1C40F" stroke-width="3" stroke-linecap="round"/>
+                  <line x1="48" y1="12" x2="52" y2="9" stroke="#F1C40F" stroke-width="3" stroke-linecap="round"/>
+                  <line x1="16" y1="12" x2="12" y2="9" stroke="#F1C40F" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+              </div>
+            </div>
+
+            <div class="step-1-text">
+              <h1 id="step1-heading" class="greeting-title">Someone special has a birthday today! ✨</h1>
+            </div>
+
+            <button id="turnOnLightsBtn" class="primary-btn btn-turn-lights" type="button">
+              <span class="btn-sparkle" aria-hidden="true">💡</span>
+              <span class="btn-text">Tap to Turn On the Lights</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- STEP 2: Portrait & Warm Greeting -->
+        <article class="step-card step-2" id="step2" aria-labelledby="step2-heading" hidden>
+          <div class="step-content step-2-content">
+            <div class="polaroid-card">
+              <div class="polaroid-pin" aria-hidden="true">📌</div>
+              
+              <div class="photo-frame">
+                <img 
+                  id="mayorPhoto" 
+                  src="assets/mayor_myca.jpg" 
+                  alt="Portrait of Mayor Myca Elizabeth R. Vergara" 
+                  class="portrait-img"
+                  onerror="this.classList.add('hide'); document.getElementById('photoFallback').classList.remove('hide');"
+                >
+                <!-- Monogram Fallback -->
+                <div id="photoFallback" class="photo-fallback hide" aria-hidden="true">
+                  <div class="monogram">MV</div>
+                  <div class="monogram-sub">Mayor Myca Vergara</div>
+                </div>
+              </div>
+
+              <div class="polaroid-caption">
+                <h2 id="step2-heading" class="polaroid-title">Happy Birthday, Mayor Myca!</h2>
+                <div class="cabanatuan-pill">
+                  <span class="flag-icon" aria-hidden="true">🌟</span>
+                  <span>Cabanatuan City, Nueva Ecija</span>
+                </div>
+              </div>
+            </div>
+
+            <button id="openCardBtn" class="primary-btn btn-advance" type="button">
+              <span class="btn-text">Open Your Card</span>
+              <span class="btn-arrow" aria-hidden="true">→</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- STEP 3: The CPDO Family Message -->
+        <article class="step-card step-3" id="step3" aria-labelledby="step3-heading" hidden>
+          <div class="step-content step-3-content">
+            <div class="frosted-letter-card">
+              <div class="letter-body">
+                <h2 id="step3-heading" class="salutation">Dear Mayor Myca,</h2>
+                
+                <p class="letter-para">
+                  Wishing you the happiest of birthdays! Thank you for your inspiring leadership, warmth, and dedication to Cabanatuan City.
+                </p>
+                <p class="letter-para">
+                  May the year ahead be filled with good health, joy, and continued strength as you lead our beloved city forward.
+                </p>
+                <p class="letter-cheer">
+                  Happy Birthday, Mayora! 🌸
+                </p>
+
+                <div class="signature-block">
+                  <div class="signature-line">— With love &amp; gratitude,</div>
+                  <div class="signature-family">Your CPDO Family</div>
+                </div>
+              </div>
+            </div>
+
+            <button id="timeForCakeBtn" class="primary-btn btn-advance" type="button">
+              <span class="btn-text">Time for Cake! 🎂</span>
+              <span class="btn-arrow" aria-hidden="true">→</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- STEP 4: Interactive Birthday Cake Finale -->
+        <article class="step-card step-4" id="step4" aria-labelledby="step4-heading" hidden>
+          <div class="step-content step-4-content">
+            
+            <!-- Instructions / Prompt Header -->
+            <div class="cake-header" id="cakeHeader">
+              <div class="prompt-pill" id="cakePrompt">
+                <span class="prompt-icon" aria-hidden="true">✨</span>
+                <span class="prompt-text">Tap the candles to make a wish!</span>
+              </div>
+            </div>
+
+            <!-- Joyful Closing Celebration Banner (Appears after blowing candles) -->
+            <div class="wish-reveal-card hide" id="wishRevealCard" aria-live="assertive">
+              <div class="reveal-stars" aria-hidden="true">🎉 🎂 ✨</div>
+              <h2 id="step4-heading" class="reveal-title">Happy Birthday, Mayor Myca!</h2>
+              <p class="reveal-sub">— From Your CPDO Family —</p>
+              <p class="reveal-wish">May all your wishes and dreams for Cabanatuan City come true!</p>
+              
+              <button id="replayBtn" class="replay-btn" type="button">
+                <svg viewBox="0 0 24 24" class="replay-svg" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M3 12a9 9 0 0 1 15-6.7L21 8"/>
+                  <path d="M21 3v5h-5"/>
+                  <path d="M21 12a9 9 0 0 1-15 6.7L3 16"/>
+                  <path d="M3 21v-5h5"/>
+                </svg>
+                <span>Replay Card</span>
+              </button>
+            </div>
+
+            <!-- Tabletop Foreground Area (Easter Eggs on Left, Birthday Cake on Right) -->
+            <div class="tabletop-foreground-area">
+              
+              <!-- Left Tabletop Easter Egg Hit-Zones (Directly Over Painted Objects on bg_party.png) -->
+              <div class="tabletop-easter-eggs" id="tabletopEasterEggs" aria-label="Interactive tabletop keepsakes">
+                <!-- 1. Cabanatuan Tricycle Figurine -->
+                <button class="easter-egg-zone zone-tricycle" data-egg="tricycle" type="button" aria-label="Inspect Cabanatuan Tricycle figurine" title="Tricycle Capital of the Philippines">
+                  <span class="egg-pulse-hint" aria-hidden="true"></span>
+                  <span class="sr-only">Cabanatuan Tricycle</span>
+                </button>
+
+                <!-- 2. Wrapped Gift Box -->
+                <button class="easter-egg-zone zone-gift" data-egg="gift" type="button" aria-label="Inspect pastel gift box" title="Birthday Gift">
+                  <span class="egg-pulse-hint" aria-hidden="true"></span>
+                  <span class="sr-only">Gift Box</span>
+                </button>
+
+                <!-- 3. Ceramic Coffee Mug -->
+                <button class="easter-egg-zone zone-mug" data-egg="mug" type="button" aria-label="Inspect ceramic coffee mug" title="Planning Coffee Mug">
+                  <span class="egg-pulse-hint" aria-hidden="true"></span>
+                  <span class="sr-only">Coffee Mug</span>
+                </button>
+              </div>
+
+              <!-- Floating Easter Egg Speech Bubble / Toast -->
+              <div class="easter-egg-toast hide" id="easterEggToast" role="status" aria-live="polite">
+                <div class="toast-bubble">
+                  <span class="toast-text" id="toastText"></span>
+                  <button class="toast-close-btn" id="toastCloseBtn" type="button" aria-label="Close note">×</button>
+                </div>
+                <div class="toast-pointer" id="toastPointer"></div>
+              </div>
+
+              <!-- Watercolor 2-Tier Birthday Cake Container (Positioned on the wooden table) -->
+              <div class="tabletop-cake-area">
+                <div class="cake-stage-wrapper" id="cakeClickTarget" role="button" tabindex="0" aria-label="Hand-painted birthday cake with 3 lit candles. Tap to blow them out and make a wish!">
+                  
+                  <!-- Soft Warm Candlelight Halo behind the Cake -->
+                  <div class="cake-candlelight-halo" id="cakeCandlelightHalo" aria-hidden="true"></div>
+
+                  <!-- Hand-Painted Watercolor & Dark-Ink-Outline SVG Cake Illustration with Living Flames -->
+                <svg viewBox="0 0 250 195" class="watercolor-cake-svg" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+                  <defs>
+                    <!-- Soft Watercolor Shadow Filter -->
+                    <filter id="cakeShadowFilter" x="-15%" y="-15%" width="130%" height="140%">
+                      <feGaussianBlur in="SourceAlpha" stdDeviation="2.5"/>
+                      <feOffset dx="0" dy="3.5"/>
+                      <feComponentTransfer><feFuncA type="linear" slope="0.32"/></feComponentTransfer>
+                      <feMerge>
+                        <feMergeNode/>
+                        <feMergeNode in="SourceGraphic"/>
+                      </feMerge>
+                    </filter>
+
+                    <!-- Flame Gradients (Outer Golden/Amber to Inner White-Hot) -->
+                    <linearGradient id="flameOuterGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+                      <stop offset="0%" stop-color="#ea580c"/>
+                      <stop offset="35%" stop-color="#f59e0b"/>
+                      <stop offset="75%" stop-color="#fef08a"/>
+                      <stop offset="100%" stop-color="#ffffff"/>
+                    </linearGradient>
+
+                    <linearGradient id="flameInnerGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+                      <stop offset="0%" stop-color="#facc15"/>
+                      <stop offset="60%" stop-color="#fef9c3"/>
+                      <stop offset="100%" stop-color="#ffffff"/>
+                    </linearGradient>
+
+                    <!-- Ceramic Plate Gradient -->
+                    <linearGradient id="plateGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" stop-color="#ffffff"/>
+                      <stop offset="60%" stop-color="#f2ede4"/>
+                      <stop offset="100%" stop-color="#dfd7c8"/>
+                    </linearGradient>
+
+                    <!-- Baked Sponge Gradients (Warm Caramel / Honeyed Crumb with Watercolor Bleed) -->
+                    <linearGradient id="spongeGradBottom" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#d68f4e"/>
+                      <stop offset="45%" stop-color="#c17937"/>
+                      <stop offset="85%" stop-color="#9a5822"/>
+                      <stop offset="100%" stop-color="#804417"/>
+                    </linearGradient>
+
+                    <linearGradient id="spongeGradTop" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#dba062"/>
+                      <stop offset="50%" stop-color="#c98242"/>
+                      <stop offset="90%" stop-color="#a45f27"/>
+                      <stop offset="100%" stop-color="#884819"/>
+                    </linearGradient>
+
+                    <!-- Rich Frosting Gradients (Luscious Ivory Cream) -->
+                    <linearGradient id="frostingGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" stop-color="#ffffff"/>
+                      <stop offset="55%" stop-color="#fffcf5"/>
+                      <stop offset="100%" stop-color="#faedd7"/>
+                    </linearGradient>
+
+                    <linearGradient id="frostingTopSurface" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" stop-color="#ffffff"/>
+                      <stop offset="80%" stop-color="#fffaf0"/>
+                      <stop offset="100%" stop-color="#f7ebd7"/>
+                    </linearGradient>
+
+                    <!-- Candle Wax Gradients -->
+                    <linearGradient id="pinkCandleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="#fca5a5"/>
+                      <stop offset="40%" stop-color="#f87171"/>
+                      <stop offset="100%" stop-color="#e11d48"/>
+                    </linearGradient>
+
+                    <linearGradient id="blueCandleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="#bae6fd"/>
+                      <stop offset="40%" stop-color="#38bdf8"/>
+                      <stop offset="100%" stop-color="#0284c7"/>
+                    </linearGradient>
+
+                    <linearGradient id="goldCandleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="#fef08a"/>
+                      <stop offset="40%" stop-color="#facc15"/>
+                      <stop offset="100%" stop-color="#ca8a04"/>
+                    </linearGradient>
+                  </defs>
+
+                  <!-- Ceramic Plate Underneath with Dark Ink Line & Wood Shadow -->
+                  <g class="svg-cake-plate">
+                    <ellipse cx="125" cy="188" rx="100" ry="7" fill="rgba(44, 24, 16, 0.45)" filter="blur(2.5px)"/>
+                    <path d="M22,178 C22,172 228,172 228,178 C228,187 22,187 22,178 Z" fill="url(#plateGrad)" stroke="#2c1810" stroke-width="2.5" stroke-linejoin="round"/>
+                    <ellipse cx="125" cy="177" rx="96" ry="6" fill="#fcf9f2" stroke="#2c1810" stroke-width="1.2" opacity="0.8"/>
+                  </g>
+
+                  <!-- BOTTOM CAKE TIER -->
+                  <g class="svg-bottom-tier" filter="url(#cakeShadowFilter)">
+                    <!-- Baked Sponge Crumb -->
+                    <path d="M34,130 C34,130 33,174 34,175 C35,184 215,184 216,175 C217,174 216,130 216,130 Z" fill="url(#spongeGradBottom)" stroke="#2c1810" stroke-width="2.6" stroke-linejoin="round"/>
+                    
+                    <!-- Center Cream Filling Stripe (Victoria Sponge style) -->
+                    <path d="M34,152 C78,155 172,155 216,152 C216,159 172,162 34,159 Z" fill="#fffdf9" stroke="#2c1810" stroke-width="1.8"/>
+                    
+                    <!-- Scalloped Dripping Cream Frosting Layer -->
+                    <path d="M32,126 
+                             C40,144 48,128 56,142 
+                             C64,158 72,132 82,146 
+                             C92,160 100,134 110,148 
+                             C120,162 130,138 140,152 
+                             C150,166 160,134 170,148 
+                             C180,162 190,132 198,144 
+                             C206,154 214,128 218,126 
+                             C220,118 30,118 32,126 Z" 
+                          fill="url(#frostingGrad)" stroke="#2c1810" stroke-width="2.5" stroke-linejoin="round"/>
+                  </g>
+
+                  <!-- TOP CAKE TIER -->
+                  <g class="svg-top-tier" filter="url(#cakeShadowFilter)">
+                    <!-- Baked Sponge Crumb -->
+                    <path d="M62,86 C62,86 61,124 62,125 C63,133 187,133 188,125 C189,124 188,86 188,86 Z" fill="url(#spongeGradTop)" stroke="#2c1810" stroke-width="2.6" stroke-linejoin="round"/>
+                    
+                    <!-- Center Cream Filling Stripe -->
+                    <path d="M62,104 C94,107 156,107 188,104 C188,110 156,113 62,110 Z" fill="#fffdf9" stroke="#2c1810" stroke-width="1.8"/>
+                    
+                    <!-- Thick Generous Scalloped Dripping Frosting -->
+                    <path d="M58,84 
+                             C66,104 74,88 82,106 
+                             C90,120 98,92 108,108 
+                             C118,122 126,92 136,110 
+                             C146,124 154,94 164,108 
+                             C174,120 184,88 192,84 
+                             C194,74 56,74 58,84 Z" 
+                          fill="url(#frostingGrad)" stroke="#2c1810" stroke-width="2.5" stroke-linejoin="round"/>
+                    
+                    <!-- Pillowy Cream Top Surface -->
+                    <ellipse cx="125" cy="76" rx="66" ry="14" fill="url(#frostingTopSurface)" stroke="#2c1810" stroke-width="2.5"/>
+                    <path d="M78,73 C102,68 148,68 172,73" stroke="#ffffff" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.85"/>
+                  </g>
+
+                  <!-- THREE WATERCOLOR CANDLES WITH LIVING FLICKERING FLAMES -->
+                  <g class="svg-candles">
+                    
+                    <!-- Candle 1: Pink Pastel with White Diagonal Candy Stripes -->
+                    <g class="svg-candle candle-pink">
+                      <rect x="80" y="42" width="12" height="38" rx="3.5" fill="url(#pinkCandleGrad)" stroke="#2c1810" stroke-width="2.2"/>
+                      <path d="M80,48 L92,42 M80,58 L92,52 M80,68 L92,62" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+                      <!-- Melted Wax Drop at Base -->
+                      <path d="M79,76 C76,80 82,82 85,80" fill="#fff" stroke="#2c1810" stroke-width="1.4"/>
+                      <!-- Wick -->
+                      <line x1="86" y1="42" x2="86" y2="34" stroke="#2c1810" stroke-width="2.5" stroke-linecap="round"/>
+                      
+                      <!-- Living Moving Flame 1 (Targeted with transform-origin: bottom center) -->
+                      <g class="svg-flame svg-flame-1" id="svgFlame1">
+                        <path class="flame-outer" d="M86,34 C81,34 78,28 78,23 C78,16 86,9 86,9 C86,9 94,16 94,23 C94,28 91,34 86,34 Z" fill="url(#flameOuterGrad)"/>
+                        <path class="flame-inner" d="M86,33 C83,33 81,29 81,25 C81,20 86,14 86,14 C86,14 91,20 91,25 C91,29 89,33 86,33 Z" fill="url(#flameInnerGrad)"/>
+                        <ellipse cx="86" cy="27" rx="2" ry="4" fill="#ffffff"/>
+                      </g>
+                      <!-- Smoke Wisp when Extinguished -->
+                      <path class="svg-smoke svg-smoke-1" id="svgSmoke1" d="M86,34 C80,22 92,12 84,0" stroke="rgba(220,220,220,0.85)" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+                    </g>
+
+                    <!-- Candle 2: Center Blue Pastel with Dripping Melted Wax (Tallest) -->
+                    <g class="svg-candle candle-blue">
+                      <rect x="119" y="30" width="13" height="50" rx="4" fill="url(#blueCandleGrad)" stroke="#2c1810" stroke-width="2.2"/>
+                      <path d="M119,38 L132,32 M119,50 L132,44 M119,62 L132,56 M119,74 L132,68" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+                      <!-- Signature Wax Dribble on Side (Like KiwiChill's artwork) -->
+                      <path d="M119,44 C115,50 115,62 119.5,65" stroke="#2c1810" stroke-width="1.8" fill="#dbeafe"/>
+                      <!-- Wick -->
+                      <line x1="125.5" y1="30" x2="125.5" y2="22" stroke="#2c1810" stroke-width="2.5" stroke-linecap="round"/>
+                      
+                      <!-- Living Moving Flame 2 (Targeted with transform-origin: bottom center) -->
+                      <g class="svg-flame svg-flame-2" id="svgFlame2">
+                        <path class="flame-outer" d="M125.5,22 C120,22 116.5,16 116.5,10 C116.5,2 125.5,-6 125.5,-6 C125.5,-6 134.5,2 134.5,10 C134.5,16 131,22 125.5,22 Z" fill="url(#flameOuterGrad)"/>
+                        <path class="flame-inner" d="M125.5,21 C122,21 119.5,17 119.5,12 C119.5,6 125.5,0 125.5,0 C125.5,0 131.5,6 131.5,12 C131.5,17 129,21 125.5,21 Z" fill="url(#flameInnerGrad)"/>
+                        <ellipse cx="125.5" cy="14" rx="2.5" ry="4.5" fill="#ffffff"/>
+                      </g>
+                      <!-- Smoke Wisp when Extinguished -->
+                      <path class="svg-smoke svg-smoke-2" id="svgSmoke2" d="M125.5,22 C119,10 132,0 123,-12" stroke="rgba(220,220,220,0.85)" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+                    </g>
+
+                    <!-- Candle 3: Gold Pastel with White Diagonal Candy Stripes -->
+                    <g class="svg-candle candle-gold">
+                      <rect x="158" y="44" width="12" height="36" rx="3.5" fill="url(#goldCandleGrad)" stroke="#2c1810" stroke-width="2.2"/>
+                      <path d="M158,50 L170,44 M158,60 L170,54 M158,70 L170,64" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+                      <!-- Wax Drop at Base -->
+                      <path d="M165,77 C168,81 174,80 172,77" fill="#fff" stroke="#2c1810" stroke-width="1.4"/>
+                      <!-- Wick -->
+                      <line x1="164" y1="44" x2="164" y2="36" stroke="#2c1810" stroke-width="2.5" stroke-linecap="round"/>
+                      
+                      <!-- Living Moving Flame 3 (Targeted with transform-origin: bottom center) -->
+                      <g class="svg-flame svg-flame-3" id="svgFlame3">
+                        <path class="flame-outer" d="M164,36 C159,36 156,30 156,25 C156,18 164,11 164,11 C164,11 172,18 172,25 C172,30 169,36 164,36 Z" fill="url(#flameOuterGrad)"/>
+                        <path class="flame-inner" d="M164,35 C161,35 159,31 159,27 C159,22 164,16 164,16 C164,16 169,22 169,27 C169,31 167,35 164,35 Z" fill="url(#flameInnerGrad)"/>
+                        <ellipse cx="164" cy="29" rx="2" ry="4" fill="#ffffff"/>
+                      </g>
+                      <!-- Smoke Wisp when Extinguished -->
+                      <path class="svg-smoke svg-smoke-3" id="svgSmoke3" d="M164,36 C158,24 170,14 162,2" stroke="rgba(220,220,220,0.85)" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+                    </g>
+
+                  </g>
+                </svg>
+
+              </div>
+            </div>
+          </div>
+
+          </div>
+        </article>
+
+      </section>
+
+      <!-- Bottom Step Dots Indicator -->
+      <footer class="bottom-nav">
+        <div class="step-dots" role="tablist" aria-label="Card progress">
+          <button class="dot active" data-step="1" role="tab" aria-selected="true" aria-label="Step 1: Turn on lights"></button>
+          <button class="dot" data-step="2" role="tab" aria-selected="false" aria-label="Step 2: Greeting & Photo"></button>
+          <button class="dot" data-step="3" role="tab" aria-selected="false" aria-label="Step 3: CPDO Message"></button>
+          <button class="dot" data-step="4" role="tab" aria-selected="false" aria-label="Step 4: Birthday Cake"></button>
+        </div>
+      </footer>
+
+    </main>
+  </div>
+
+  <!-- CDN Canvas Confetti for high-performance celebration confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
